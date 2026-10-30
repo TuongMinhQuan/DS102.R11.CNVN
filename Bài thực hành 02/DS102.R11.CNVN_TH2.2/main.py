@@ -37,8 +37,29 @@ print("Precision:", round(np.mean(precision_list), 4))
 print("Recall:", round(np.mean(recall_list), 4))
 print("F1-score:", round(np.mean(f1_list), 4))
 
-plt.plot(model.loss_history)
-plt.xlabel("Epoch")
-plt.ylabel("Loss")
-plt.title("Training Loss")
+print("\nConfusion Matrix:")
+print(confusion_matrix)
+
+fig, axes = plt.subplots(1, 2, figsize = (14, 6))
+
+axes[0].imshow(confusion_matrix, cmap = "Blues")
+axes[0].set_title("Confusion Matrix")
+axes[0].set_xlabel("Predicted Label")
+axes[0].set_ylabel("True Label")
+axes[0].set_xticks(range(10))
+axes[0].set_yticks(range(10))
+
+for i in range(10):
+    for j in range(10):
+        axes[0].text(
+            j, i, confusion_matrix[i, j],
+            ha = "center", va = "center", color = "red", fontsize = 7
+        )
+
+axes[1].plot(model.loss_history)
+axes[1].set_xlabel("Epoch")
+axes[1].set_ylabel("Loss")
+axes[1].set_title("Training Loss")
+
+plt.tight_layout()
 plt.show()
